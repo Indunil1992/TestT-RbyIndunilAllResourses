@@ -1,0 +1,188 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "bbc546f2-ed82-477b-98d5-77e46ea584bc": {
+        "id": "bbc546f2-ed82-477b-98d5-77e46ea584bc",
+        "parent": null,
+        "name": "TestT-RbyIndunilAllResourses",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "fda12de1-dec1-40a8-b19b-dc3c2c0ba242",
+          "73e357a7-c223-4f99-9252-042bcf60b75e"
+        ],
+        "isRemovable": false,
+        "filePath": "TestT-RbyIndunilAllResourses"
+      },
+      "fda12de1-dec1-40a8-b19b-dc3c2c0ba242": {
+        "id": "fda12de1-dec1-40a8-b19b-dc3c2c0ba242",
+        "parent": "bbc546f2-ed82-477b-98d5-77e46ea584bc",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "TestT-RbyIndunilAllResourses/lambda.js",
+        "code": "let SL_REDIS = require('slappforge-sdk-redis');\nlet clusterManager = require('./ClusterManager');\nconst redis = new SL_REDIS.Redis(clusterManager);\n\nexports.handler = function (event, context, callback) {\n    // You must always quit the redis client after it's used\n    redis.incrby({\n        clusterIdentifier: 'clster',\n        params: [{\n            key: '1',\n            increment: 2\n        }]\n    }, function (error, response, redisClient) {\n        if (error) {\n            callback(error);\n            console.log(\"errorr\");\n            console.log(error);\n        } else {\n            console.log(\"quittt\");\n            //redisClient.quit();\n        }\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigeuWest1testInduniltestirelandany",
+            "config": {}
+          }
+        ]
+      },
+      "73e357a7-c223-4f99-9252-042bcf60b75e": {
+        "id": "73e357a7-c223-4f99-9252-042bcf60b75e",
+        "parent": "bbc546f2-ed82-477b-98d5-77e46ea584bc",
+        "name": "ClusterManager.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "TestT-RbyIndunilAllResourses/ClusterManager.js",
+        "code": "module.exports = function() {\n    this.clusters = [];\n\n    this.clusters[\"clster\"] = {\n        host: process.env.EndPoint_redisClster,\n        port: 6379,\n        clusterModeEnabled: false\n    };\n};"
+      }
+    },
+    "rootNode": "bbc546f2-ed82-477b-98d5-77e46ea584bc",
+    "openFiles": [
+      "fda12de1-dec1-40a8-b19b-dc3c2c0ba242"
+    ],
+    "currentFileId": "fda12de1-dec1-40a8-b19b-dc3c2c0ba242",
+    "resources": {
+      "apigeuWest1testInduniltestirelandany": {
+        "name": "apigeuWest1testInduniltestirelandany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "eu-west-1",
+          "apiMode": 0,
+          "apiName": "testIndunil",
+          "endpointType": "REGIONAL",
+          "resourceMode": 0,
+          "resourceName": "test/ireland",
+          "resourcePath": "/test/ireland",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "Test",
+          "mode": 0
+        }
+      },
+      "redis-clster": {
+        "name": "redis-clster",
+        "type": "Redis",
+        "config": {
+          "clusterConfig": {
+            "engineType": "redis",
+            "clusterSpec": {
+              "instanceFamily": "t2",
+              "nodeTypeClass": "cache.t2.micro",
+              "engineVersion": "5.0.4",
+              "clusterModeEnabled": false,
+              "autoFailoverEnabled": true,
+              "numOfShards": 3,
+              "numOfReplicas": 2
+            },
+            "clusterSetting": {
+              "clusterName": "clster",
+              "clusterDescription": "des",
+              "port": 6379
+            },
+            "vpcSpec": {
+              "vpcType": "NEW",
+              "existingVPC": {
+                "vpcID": "",
+                "subNetID": "",
+                "securityGroupID": ""
+              },
+              "newVPC": {
+                "vpcName": "git",
+                "vpcIPv4CIDR": "10.0.0.0/16",
+                "subnetName": "sub",
+                "subnetIPv4CIDR": "10.0.0.0/20"
+              }
+            },
+            "host": "",
+            "doesExist": false,
+            "alreadyDeployed": false,
+            "redisClient": "",
+            "external": false
+          },
+          "clusterResources": [],
+          "editMode": false,
+          "enableInject": true,
+          "isGlobalEditMode": false,
+          "isClusterSelectionValid": true,
+          "isNewFromGlobal": false,
+          "mode": 0,
+          "operation": {
+            "str": "REDIS_INCRBY",
+            "operation": "incrby",
+            "displayName": "INCRBY",
+            "type": {
+              "str": "REDIS_STRINGS",
+              "type": "strings",
+              "displayName": "STRINGS"
+            }
+          },
+          "params": [],
+          "projectRegion": "eu-west-1",
+          "reusableMode": false,
+          "showOperations": true,
+          "validator": {
+            "validatableFields": {},
+            "validity": true
+          }
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": null
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "slappforge-sdk-redis": {
+          "name": "slappforge-sdk-redis",
+          "language": "javascript",
+          "version": "0.0.3",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "TestT-RbyIndunilAllResourses",
+    "projectDescription": "test by indunil all T & R",
+    "projectVersion": "1.0.0",
+    "projectRegion": "eu-west-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1568177425556
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "TestT-RbyIndunilAllResourses",
+      "url": "https://github.com/Indunil1992/TestT-RbyIndunilAllResourses"
+    }
+  }
+}
